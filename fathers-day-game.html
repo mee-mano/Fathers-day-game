@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Father’s Day!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #fff0f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    #heart {
+      font-size: 80px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      position: relative;
+      z-index: 10;
+    }
+
+    #heart:hover {
+      transform: scale(1.2);
+    }
+
+    #message {
+      font-size: 24px;
+      color: #6b4c59;
+      margin-top: 20px;
+      max-width: 80%;
+      text-align: center;
+      padding: 10px;
+      background: #ffe4ec;
+      border-radius: 12px;
+      min-height: 60px;
+    }
+
+    #final {
+      display: none;
+      margin-top: 40px;
+      font-size: 28px;
+      color: #483248;
+      text-align: center;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      font-size: 14px;
+      color: #888;
+    }
+
+    /* Dad’s photo initially hidden and small */
+    #dad-photo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      object-fit: cover;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      transition: opacity 0.6s ease, width 0.6s ease, height 0.6s ease, transform 0.6s ease;
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+      z-index: 5;
+    }
+
+    /* When active, photo grows and appears */
+    #dad-photo.show {
+      width: 150px;
+      height: 150px;
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Click the Heart, Dad 💖</h1>
+  <div id="heart">💗</div>
+  <img src="dad-photo.jpg" alt="Dad" id="dad-photo" />
+  <div id="message">Click the heart to reveal a message!</div>
+  <div id="final">Happy Father’s Day! You are so loved 💕</div>
+
+  <footer>Made with love by your favorite daughter 💌</footer>
+
+  <audio id="bg-music" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3b79f3b8df.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    const messages = [
+      "You're my hero, Dad!",
+      "Thank you for every hug and smile.",
+      "You make my world brighter.",
+      "I’m so lucky to have you.",
+      "You're the best dad ever!",
+      "Thank you for always believing in me.",
+      "Your love means everything.",
+      "You are my safe place.",
+      "You’ve taught me so much.",
+      "I love you more than words can say!"
+    ];
+
+    let index = 0;
+    const heart = document.getElementById("heart");
+    const msg = document.getElementById("message");
+    const final = document.getElementById("final");
+    const dadPhoto = document.getElementById("dad-photo");
+
+    heart.addEventListener("click", () => {
+      if (index < messages.length) {
+        msg.textContent = messages[index];
+        index++;
+
+        // Show dad photo only on first message
+        if (index === 1) {
+          dadPhoto.classList.add("show");
+        }
+
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+        });
+
+        heart.style.transform = "scale(1.1)";
+        setTimeout(() => (heart.style.transform = "scale(1)"), 150);
+      } else {
+        msg.style.display = "none";
+        heart.style.display = "none";
+        dadPhoto.classList.remove("show");
+        final.style.display = "block";
+
+        confetti({
+          particleCount: 200,
+          spread: 100,
+          origin: { y: 0.6 },
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
